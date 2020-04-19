@@ -12,6 +12,9 @@ import random
 from pathlib import Path
 from PIL import Image
 import webbrowser
+import matplotlib.pyplot as plt
+
+plt.style.use('ggplot')
 
 st.title('Wordcloud and LDA on review sites')
 
@@ -70,6 +73,13 @@ if st.button('Run Model'):
     Path(os.path.sep.join(save_path_LDA.split(os.path.sep)[:-1])).mkdir(parents=True, exist_ok=True)
     myTopicModel.saveLDA(save_path_LDA)
     webbrowser.open_new_tab(save_path_LDA)
+    
+    plt.hist(ms.all_reviews['Rating'],facecolor='blue', alpha=0.5, bins=5)
+    plt.xlabel('Rating')
+    plt.ylabel('distribution')
+    plt.title(r'The distribution of ratings')
+    plt.xlim(1,5)
+    st.pyplot()
     
     st.dataframe(ms.all_reviews)
 
