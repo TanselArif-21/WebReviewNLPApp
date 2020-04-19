@@ -1,12 +1,11 @@
-#import package
+# Imports
 import streamlit as st
 import pandas as pd
-import numpy as np
 from PIL import Image
-import time
 import Directory
 import os
-from functions import *
+import WebScraper
+import TopicModeling
 import string
 import random
 from pathlib import Path
@@ -14,15 +13,15 @@ from PIL import Image
 import webbrowser
 import matplotlib.pyplot as plt
 
+# Set the plot style to ggplot
 plt.style.use('ggplot')
 
+# Set the title
 st.title('Wordcloud and LDA on review sites')
 
 # Set up Side Bar
 st.sidebar.title('Please enter the model information')
-
 st.sidebar.markdown('Example URL: url1 + increment_string + increment + url2')
-
 url1 = st.sidebar.text_input('url1: The first part of the url string that remains constant between review pages', 'https://www.tripadvisor.co.uk/Attraction_Review-g190384-d6755801-Reviews')
 url2 = st.sidebar.text_input('url2: The second part of the url string that remains constant between review pages', '-The_House_of_Dionysus-Paphos_Paphos_District.html')
 increment_string1 = st.sidebar.text_input('increment_string: The part of the url string which precedes the page change', '-or')
@@ -33,9 +32,9 @@ increment = st.sidebar.number_input('increment: The part of the string which com
 #site = st.sidebar.text_input('site', 'tripadvisor')
 site = st.sidebar.selectbox('Site', ['tripadvisor','yelp'])
 filename = ''
-
 topic_num = st.sidebar.number_input('Number Of Topics',min_value = 2,value = 2)
 
+# If we want each generated file to have a random name so to not overwrite the previously generated files
 for i in range(4):
     filename = filename + random.choice(string.ascii_letters)
 
