@@ -31,6 +31,7 @@ total_pages = st.sidebar.number_input('total_pages', 2)
 increment = st.sidebar.number_input('increment: The part of the string which comes after the page change',min_value = 0,value = 5)
 #site = st.sidebar.text_input('site', 'tripadvisor')
 site = st.sidebar.selectbox('Site', ['tripadvisor','yelp'])
+word_search = st.sidebar.text_input('Word: Only consider reviews with this word. Leave empty for all', '')
 filename = ''
 topic_num = st.sidebar.number_input('Number Of Topics',min_value = 2,value = 2)
 
@@ -44,6 +45,10 @@ if st.button('Run Model'):
                           total_pages=int(total_pages),increment=int(increment),silent=False)
 
     ms.fullscraper()
+    
+    # If the user wants to filter on a particular word - case insensitive
+    if word_search != '':
+        ms.all_reviews = ms.all_reviews[ms.all_reviews['fullreview'].str.contains(word_search,case=False)]
 
     filePath = Directory.outputPath
     #if filename=='':
