@@ -1,5 +1,4 @@
-import nltk
-nltk.download('stopwords')
+from spacy.lang.en.stop_words import STOP_WORDS
 import numpy as np
 import pandas as pd
 import gensim
@@ -31,7 +30,7 @@ class TopicModeling:
         '''
 
         # Get the stopwords
-        self.stopwords = nltk.corpus.stopwords.words('english')
+        self.stopwords = STOP_WORDS
 
         # Attach a copy of the dataframe to this object
         self.df = df.copy()
